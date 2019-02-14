@@ -34,7 +34,7 @@ function connect() {
 
 function disconnect() {
 	if (ws != null) {
-		ws.close();
+		ws.disconnect();
 	}
 	setConnected(false);
 	console.log("Disconnected");
