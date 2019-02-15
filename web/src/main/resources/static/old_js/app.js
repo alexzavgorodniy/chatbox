@@ -12,8 +12,8 @@ function setConnected(connected) {
 
 function connect() {
 
-  var socket = new SockJS('/greeting');
-  ws = Stomp.over(socket);
+  var socket = new WebSocket('ws://localhost:8080/greeting');
+	ws = Stomp.over(socket);
 
 	ws.connect({}, function(frame) {
 	  setConnected(true);
@@ -25,7 +25,7 @@ function connect() {
 
 		ws.subscribe("/user/queue/reply", function(message) {
 
-       showGreeting(JSON.parse(message.body).name);
+       showGreeting(JSON.parse(message.body).content);
 		});
 	}, function(error) {
 		alert("STOMP error " + error);
@@ -34,10 +34,10 @@ function connect() {
 
 function disconnect() {
 	if (ws != null) {
-		ws.disconnect();
+		ws.close();
 	}
 	setConnected(false);
-	console.log("Disconnected");
+	alert("Disconnected");
 }
 
 function sendName() {
